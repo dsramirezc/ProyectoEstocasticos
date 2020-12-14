@@ -1,3 +1,0 @@
-Num,N. roots,N. nodes,Alpha,N. edges,N. Bridge,N. Articulation points,Disperse,Dense,Max Deep,N. disconected nodes
-0,2,11,0.8,8,0,0,True,False,5,8
-1,2,11,0.8,5,0,0,True,False,4,7

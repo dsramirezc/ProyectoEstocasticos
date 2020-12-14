@@ -1,6 +1,6 @@
 import tkinter as tk
 import time
-
+import json
 class Table(tk.LabelFrame):
     graphs=[]
     def __init__(self,*args, **kwargs):
@@ -26,6 +26,7 @@ class Table(tk.LabelFrame):
         tk.Label(self, text="Deep", anchor="w").grid(row=0, column=9, sticky="ew")
         tk.Label(self, text="Disconected nodes", anchor="w").grid(row=0, column=9, sticky="ew")
         tk.Label(self, text="ver datos", anchor="w").grid(row=0, column=10, sticky="ew")
+        tk.Label(self, text="exportar", anchor="w").grid(row=0, column=11, sticky="ew")
 
         row = 1
         for (nr,nodes,raices,alpha,aristas,puentes,articulaciones,disperso,denso,maxProfundidad,innodes) in data:
@@ -41,6 +42,7 @@ class Table(tk.LabelFrame):
             maxProfundidad_label = tk.Label(self, text=maxProfundidad, anchor="w")
             innodes_label = tk.Label(self, text=innodes, anchor="w")
             action_button = tk.Button(self, text="graficar", command=lambda nr=nr: self.graficar(nr-1))
+            export_button = tk.Button(self, text="exportar", command=lambda nr=nr: self.exportar(nr-1))
 
             nr_label.grid(row=row, column=0, sticky="ew")
             nodes_label.grid(row=row, column=1, sticky="ew")
@@ -54,7 +56,13 @@ class Table(tk.LabelFrame):
             maxProfundidad_label.grid(row=row, column=9, sticky="ew")
             innodes_label.grid(row=row, column=9, sticky="ew")
             action_button.grid(row=row, column=10, sticky="ew")
+            export_button.grid(row=row, column=11, sticky="ew")
             row += 1
     def graficar(self, x):
         print(x)
         self.graphs[x].colorgraph()
+    def exportar(self,x):
+        title = "Graph-" +str(x) +".json"
+        data = self.graphs[x].exportar()
+        with open(title, 'w') as o:
+            json.dump(data, o)

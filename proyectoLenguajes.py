@@ -146,6 +146,15 @@ class RandomGraph:
             bfs = bfs1.copy()
         self.maxDepth = depth
 
+    def exportar(self):
+        exp = {
+            'nnodes': self.nodes,
+            'nnedges': self.edges,
+            'adjavency': self.adjacency,
+            'roots': self.roots,
+        }
+        return exp
+
     def colorgraph(self):
         # colores
         colors = px.colors.qualitative.Safe
