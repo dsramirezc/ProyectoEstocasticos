@@ -193,7 +193,6 @@ class RandomGraph:
             y = self.posy[node]
             node_x.append(x)
             node_y.append(y)
-
         node_trace = go.Scatter(
             x=node_x, y=node_y,
             mode='markers',
@@ -244,8 +243,8 @@ class RandomGraph:
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
             )
         fig.show()
-rg = RandomGraph(2,0.1,1)
-print(rg.adjacency)
-print(rg.roots)
-print(rg.bridges)
-rg.colorgraph()
+# rg = RandomGraph(2,0.1,1)
+# print(rg.adjacency)
+# print(rg.roots)
+# print(rg.bridges)
+# rg.colorgraph()

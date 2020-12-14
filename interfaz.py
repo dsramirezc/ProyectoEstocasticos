@@ -3,8 +3,11 @@ try:
 except :
     from Tkinter import *  # Python 2.x
 
+from proyectoLenguajes import RandomGraph
+
 # Clase para hacer la interfaZ grafica
 class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.  
+    graphs = []
     def __init__(self, master):
         self.master = master #Creando objeto (gráfica) 
         master.title("GUI") #Nombre de ventana 
@@ -43,10 +46,13 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         self.guardarDatos = Button(master, text="Guardar redes",width=20,highlightbackground=color1,command=self.guardarDatos).place(x=280+50,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
     #funcion para realizar las diferentes graficas 
     def generar(self):
-        parameters = [int(self.nodos.get()),int(self.alpha.get()),int(self.nraices.get()),int(self.nredes.get())]
+        redes = int(self.nredes.get())
+        parameters = [int(self.nodos.get()),float(self.alpha.get()),int(self.nraices.get())]
+        for i in range(redes):
+            graphs.append(RandomGraph(parameters[0],parameters[1],parameters[2]))
         return True
     def guardarDatos(self):
-
+        
         #guarda los datos de las redes
         return True
 root = Tk()
