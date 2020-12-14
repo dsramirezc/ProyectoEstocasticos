@@ -24,9 +24,9 @@ class Table(tk.LabelFrame):
         tk.Label(self, text="Disperso", anchor="w").grid(row=0, column=7, sticky="ew")
         tk.Label(self, text="Denso", anchor="w").grid(row=0, column=8, sticky="ew")
         tk.Label(self, text="Deep", anchor="w").grid(row=0, column=9, sticky="ew")
-        tk.Label(self, text="Disconected nodes", anchor="w").grid(row=0, column=9, sticky="ew")
-        tk.Label(self, text="ver datos", anchor="w").grid(row=0, column=10, sticky="ew")
-        tk.Label(self, text="exportar", anchor="w").grid(row=0, column=11, sticky="ew")
+        tk.Label(self, text="Disconected nodes", anchor="w").grid(row=0, column=10, sticky="ew")
+        tk.Label(self, text="ver datos", anchor="w").grid(row=0, column=11, sticky="ew")
+        tk.Label(self, text="exportar", anchor="w").grid(row=0, column=12, sticky="ew")
 
         row = 1
         for (nr,nodes,raices,alpha,aristas,puentes,articulaciones,disperso,denso,maxProfundidad,innodes) in data:
@@ -54,9 +54,9 @@ class Table(tk.LabelFrame):
             disperso_label.grid(row=row, column=7, sticky="ew")
             denso_label.grid(row=row, column=8, sticky="ew")
             maxProfundidad_label.grid(row=row, column=9, sticky="ew")
-            innodes_label.grid(row=row, column=9, sticky="ew")
-            action_button.grid(row=row, column=10, sticky="ew")
-            export_button.grid(row=row, column=11, sticky="ew")
+            innodes_label.grid(row=row, column=10, sticky="ew")
+            action_button.grid(row=row, column=11, sticky="ew")
+            export_button.grid(row=row, column=12, sticky="ew")
             row += 1
     def graficar(self, x):
         print(x)

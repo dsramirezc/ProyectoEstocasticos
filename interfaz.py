@@ -7,7 +7,7 @@ try:
 except :
     from Tkinter import *  # Python 2.x
 
-from proyectoLenguajes import RandomGraph
+from graphrootsimulator import RandomGraph
 from table import Table
 
 

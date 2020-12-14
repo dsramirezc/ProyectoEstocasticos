@@ -161,7 +161,7 @@ class RandomGraph:
         for i in range(self.nodes):
             if(i in self.roots):
                 self.posx.append(random.randint(100,900))
-                self.posy.append(random.randint(700,1000))
+                self.posy.append(800)
             else:
                 self.posx.append(random.randint(0,1000))
                 self.posy.append(random.randint(0,500))
