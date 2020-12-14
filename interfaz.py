@@ -1,4 +1,5 @@
 import csv
+import tkinter as tk
 
 try:
     from tkinter import *  # Python 3.x
@@ -6,6 +7,8 @@ except :
     from Tkinter import *  # Python 2.x
 
 from proyectoLenguajes import RandomGraph
+from table import Table
+
 
 # Clase para hacer la interfaZ grafica
 class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.  
@@ -38,11 +41,11 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         self.alpha.place(x=x1-10+deltaX+auxx*2,y=deltaY*2+y1+100) #Objeto Entry de la interfaz.
         self.lab3 =Label(master, text="Numero de servidores:",width=28,bg=color).place(x=50,y=250)
         self.nraices= Entry(width=6)
-        self.nraices.insert(END,0)#pasar de grados a radianes
+        self.nraices.insert(END,2)#pasar de grados a radianes
         self.nraices.place(x=x1-10+deltaX+auxx*2,y=deltaY*2+y1+200) #Objeto Entry de la interfaz.
         self.lab4 =Label(master, text="Numero de redes a generar:",width=30,bg=color).place(x=50,y=350) 
         self.nredes = Entry(width=6)
-        self.nredes.insert(END,0)#pasar de grados a radianes
+        self.nredes.insert(END,2)#pasar de grados a radianes
         self.nredes.place(x=x1-10+deltaX+auxx*2,y=deltaY*2+y1+300) #Objeto Entry de la interfaz.
         self.generar = Button(master, text="Generar",width=6,command=self.generar,highlightbackground=color1).place(x=250-100,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
         self.reiniciar = Button(master, text="Reiniciar",width=20,highlightbackground=color1,command=self.reboot).place(x=280+50,y=380)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animarreu
@@ -53,6 +56,9 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         parameters = [int(self.nodos.get()),float(self.alpha.get()),int(self.nraices.get())]
         for i in range(redes):
             self.graphs.append(RandomGraph(parameters[0],parameters[1],parameters[2]))
+        root = tk.Tk()
+        tabla=Table(root,self.graphs,text="Datos Redes").pack(side="top", fill="both", expand=True, padx=10, pady=10)
+        root.mainloop()
         return True
     def guardarDatos(self):
         import csv
