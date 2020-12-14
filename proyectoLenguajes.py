@@ -30,6 +30,7 @@ class RandomGraph:
     maxDepth = 0
     isRoot = []
     rootConnections = []
+    disconectednodes=[]
     # graphpositions
     posx = []
     posy = []
@@ -63,6 +64,7 @@ class RandomGraph:
                     self.edges += 1
         self.getArticulationPointsAndBridges(self.root, -1)
         self.getMaxDepth()
+        self.getdisconected()
         self.posx = []
         self.posy = []
 
@@ -103,6 +105,11 @@ class RandomGraph:
         for i in range(self.nodes):
             for j in self.adjacency[i]:
                 print(i, j)
+
+    def getdisconected(self):
+        for i in range(self.nodes):
+            if(self.checknotroot(self.adjacency[i],self.roots) and i not in self.roots):
+                self.disconectednodes.append(i)
 
     def getArticulationPointsAndBridges(self, node, parent):
         self.vis[node] = True
@@ -245,8 +252,6 @@ class RandomGraph:
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
             )
         fig.show()
-# rg = RandomGraph(2,0.1,1)
-# print(rg.adjacency)
 # print(rg.roots)
 # print(rg.bridges)
 # rg.colorgraph()

@@ -1,3 +1,5 @@
+import csv
+
 try:
     from tkinter import *  # Python 3.x
 except :
@@ -43,20 +45,28 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         self.nredes.insert(END,0)#pasar de grados a radianes
         self.nredes.place(x=x1-10+deltaX+auxx*2,y=deltaY*2+y1+300) #Objeto Entry de la interfaz.
         self.generar = Button(master, text="Generar",width=6,command=self.generar,highlightbackground=color1).place(x=250-100,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
-        self.reiniciar = Button(master, text="Reiniciar",width=20,highlightbackground=color1,command=self.reboot).place(x=280+100,y=380)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animarreu
+        self.reiniciar = Button(master, text="Reiniciar",width=20,highlightbackground=color1,command=self.reboot).place(x=280+50,y=380)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animarreu
         self.guardarDatos = Button(master, text="Guardar redes",width=20,highlightbackground=color1,command=self.guardarDatos).place(x=280+50,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
     #funcion para realizar las diferentes graficas 
     def generar(self):
         redes = int(self.nredes.get())
         parameters = [int(self.nodos.get()),float(self.alpha.get()),int(self.nraices.get())]
         for i in range(redes):
-            self.graphs.append(RandomGraph(parameters[0],parameters[1],parameters[2]))
+            rg = RandomGraph(parameters[0],parameters[1],parameters[2])
+            self.graphs.append(rg)
         for i in self.graphs:
-            i.colorgraph()
+            # i.colorgraph()
             print(i.articulationPoints)
         return True
     def guardarDatos(self):
-        
+        import csv
+        with open('graphs.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["Num", "N. roots", "N. nodes", "Alpha", "N. edges", "N. Bridge", "N. Articulation points", "Disperse", "Dense","Max Deep", "N. disconected nodes"])
+            i =0
+            for g in self.graphs:
+                writer.writerow([i,len(g.roots),g.nodes,g.alpha,g.edges,len(g.bridges),len(g.articulationPoints),g.isDisperse(),g.isDense(),g.maxDepth,len(g.disconectednodes)])
+                i+=1
         #guarda los datos de las redes
         return True
     def reboot(self):
