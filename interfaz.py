@@ -42,18 +42,26 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         self.nredes = Entry(width=6)
         self.nredes.insert(END,0)#pasar de grados a radianes
         self.nredes.place(x=x1-10+deltaX+auxx*2,y=deltaY*2+y1+300) #Objeto Entry de la interfaz.
-        self.generar = Button(master, text="Generar",width=6,command=self.generar,highlightbackground=color1).place(x=280-100,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
+        self.generar = Button(master, text="Generar",width=6,command=self.generar,highlightbackground=color1).place(x=250-100,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
+        self.reiniciar = Button(master, text="Reiniciar",width=20,highlightbackground=color1,command=self.reboot).place(x=280+100,y=380)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animarreu
         self.guardarDatos = Button(master, text="Guardar redes",width=20,highlightbackground=color1,command=self.guardarDatos).place(x=280+50,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
     #funcion para realizar las diferentes graficas 
     def generar(self):
         redes = int(self.nredes.get())
         parameters = [int(self.nodos.get()),float(self.alpha.get()),int(self.nraices.get())]
         for i in range(redes):
-            graphs.append(RandomGraph(parameters[0],parameters[1],parameters[2]))
+            self.graphs.append(RandomGraph(parameters[0],parameters[1],parameters[2]))
+        for i in self.graphs:
+            i.colorgraph()
+            print(i.articulationPoints)
         return True
     def guardarDatos(self):
         
         #guarda los datos de las redes
+        return True
+    def reboot(self):
+        print("reboot")
+        self.graphs = []
         return True
 root = Tk()
 Ventana(root)

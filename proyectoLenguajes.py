@@ -157,7 +157,7 @@ class RandomGraph:
                 self.posy.append(random.randint(700,1000))
             else:
                 self.posx.append(random.randint(0,1000))
-                self.posy.append(random.randint(0,700))
+                self.posy.append(random.randint(0,500))
         edge_x = []
         edge_y = []
         edgecolors = []
@@ -178,21 +178,21 @@ class RandomGraph:
                 edge_y.append(y0)
                 edge_y.append(y1)
                 edge_y.append(None)
-        print(edgecolors)
         edge_trace = go.Scatter(
             x=edge_x, y=edge_y,
             line=dict(width=0.5, color='#888'),
             hoverinfo='none',
             mode='lines')
-        print(edge_trace.marker)
         # Color edge
         node_x = []
         node_y = []
+        sizes = [100,50,10]
         for node in range(self.nodes):
             x = self.posx[node]
             y = self.posy[node]
             node_x.append(x)
             node_y.append(y)
+        s = int(1000/self.nodes)
         node_trace = go.Scatter(
             x=node_x, y=node_y,
             mode='markers',
@@ -206,7 +206,7 @@ class RandomGraph:
                 # colorscale='YlGnBu',
                 # reversescale=True,
                 color=[],
-                size=10,
+                size=s,
                 line_width=2))
         # colors
         
@@ -223,13 +223,15 @@ class RandomGraph:
             # no connection
             if(self.checknotroot(self.adjacency[i],self.roots) and i not in self.roots):
                 node_adjacencies[i]=(colors[9])
+            if(i in self.articulationPoints):
+                node_adjacencies[i]=(colors[5])
             nodetext += 'Conexiones: '+str(len(self.adjacency[i])) + ' - ' + "Node #" + str(i)
             node_text.append(nodetext)
         node_trace.marker.color = node_adjacencies
         node_trace.text = node_text
         fig = go.Figure(data=[edge_trace, node_trace],
              layout=go.Layout(
-                title='<br>Network graph made with Python',
+                title='Network Graph',
                 titlefont_size=16,
                 showlegend=False,
                 hovermode='closest',
