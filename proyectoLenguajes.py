@@ -4,38 +4,30 @@ import random
 import plotly.graph_objects as go
 import plotly.express as px
 class RandomGraph:
-    # number of nodes
-    nodes = 0
-    # number of edge
-    edges = 0
-    # array of roots
-    roots = []
-    # number of roots
-    nroots = 0
-    # alpha parameter
-    alpha = 0
-    # probability of the grpah
-    probability = 0
-    # adjacency
-    adjacency = []
-    vis = []
-    num = []
-    low = []
-    # nodes of brides
-    articulationPoints = []
-    # edge of bridge
-    bridges = []
-    time = 1
-    root = 0
-    maxDepth = 0
-    isRoot = []
-    rootConnections = []
-    disconectednodes=[]
-    # graphpositions
-    posx = []
-    posy = []
 
     def __init__(self, nodes, alpha, nroots):
+        # array of roots
+        self.roots = []
+        # probability of the grpah
+        self.probability = 0
+        # adjacency
+        self.adjacency = []
+        self.vis = []
+        self.num = []
+        self.low = []
+        # nodes of brides
+        self.articulationPoints = []
+        # edge of bridge
+        self.bridges = []
+        self.time = 1
+        self.root = 0
+        self.maxDepth = 0
+        self.isRoot = []
+        self.rootConnections = []
+        self.disconectednodes=[]
+        # graphpositions
+        self.posx = []
+        self.posy = []
         self.nroots = nroots
         self.edges = 0
         self.nodes = nodes
@@ -108,9 +100,13 @@ class RandomGraph:
 
     def getdisconected(self):
         for i in range(self.nodes):
-            if(self.checknotroot(self.adjacency[i],self.roots) and i not in self.roots):
+            if(self.checknotroot(self.adjacency[i]) and (i not in self.roots)):
                 self.disconectednodes.append(i)
-
+    def checknotroot(self,ad):
+            for z in ad:
+                if self.isRoot[z]:
+                    return False
+            return True
     def getArticulationPointsAndBridges(self, node, parent):
         self.vis[node] = True
         self.num[node] = self.time
@@ -150,11 +146,6 @@ class RandomGraph:
             bfs = bfs1.copy()
         self.maxDepth = depth
 
-    def checknotroot(self,ad,roots):
-        for i in ad:
-            if i in roots:
-                return False
-        return True
     def colorgraph(self):
         # colores
         colors = px.colors.qualitative.Safe
@@ -228,7 +219,7 @@ class RandomGraph:
                 node_adjacencies.append(colors[0])
                 nodetext = nodetext + "Cliente" + ' - '
             # no connection
-            if(self.checknotroot(self.adjacency[i],self.roots) and i not in self.roots):
+            if(self.checknotroot(self.adjacency[i]) and i not in self.roots):
                 node_adjacencies[i]=(colors[9])
             if(i in self.articulationPoints):
                 node_adjacencies[i]=(colors[5])

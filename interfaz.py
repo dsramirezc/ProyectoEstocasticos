@@ -52,11 +52,7 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         redes = int(self.nredes.get())
         parameters = [int(self.nodos.get()),float(self.alpha.get()),int(self.nraices.get())]
         for i in range(redes):
-            rg = RandomGraph(parameters[0],parameters[1],parameters[2])
-            self.graphs.append(rg)
-        for i in self.graphs:
-            # i.colorgraph()
-            print(i.articulationPoints)
+            self.graphs.append(RandomGraph(parameters[0],parameters[1],parameters[2]))
         return True
     def guardarDatos(self):
         import csv
@@ -65,11 +61,13 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
             writer.writerow(["Num", "N. roots", "N. nodes", "Alpha", "N. edges", "N. Bridge", "N. Articulation points", "Disperse", "Dense","Max Deep", "N. disconected nodes"])
             i =0
             for g in self.graphs:
-                writer.writerow([i,len(g.roots),g.nodes,g.alpha,g.edges,len(g.bridges),len(g.articulationPoints),g.isDisperse(),g.isDense(),g.maxDepth,len(g.disconectednodes)])
+                writer.writerow([i,len(g.roots),g.nodes,g.alpha,g.edges,len(g.bridges),len(g.articulationPoints),g.isDisperse(),g.isDense(),g.maxDepth,len(set(g.disconectednodes))])
                 i+=1
         #guarda los datos de las redes
         return True
     def reboot(self):
+        for i in self.graphs:
+            i.colorgraph()
         print("reboot")
         self.graphs = []
         return True
