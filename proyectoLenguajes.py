@@ -221,8 +221,8 @@ class RandomGraph:
             # no connection
             if(self.checknotroot(self.adjacency[i]) and i not in self.roots):
                 node_adjacencies[i]=(colors[9])
-            # if(i in self.articulationPoints):
-            #     node_adjacencies[i]=(colors[5])
+            if(i in self.articulationPoints):
+                node_adjacencies[i]=(colors[5])
             nodetext += 'Conexiones: '+str(len(self.adjacency[i])) + ' - ' + "Node #" + str(i)
             node_text.append(nodetext)
         node_trace.marker.color = node_adjacencies
