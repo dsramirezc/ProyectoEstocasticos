@@ -55,5 +55,3 @@ class Table(tk.LabelFrame):
     def graficar(self, x):
         print(x)
         self.graphs[x].colorgraph()
-
-5

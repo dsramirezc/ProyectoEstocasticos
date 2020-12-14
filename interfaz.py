@@ -1,5 +1,6 @@
 import csv
 import tkinter as tk
+from tkinter import messagebox
 
 try:
     from tkinter import *  # Python 3.x
@@ -20,7 +21,7 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         master['bg'] = '#4A5160'.upper() #Color de background
         color= '#4A5160'.upper() #Color azúl de botón
         color1="#9F9FA0".upper() #Color azúl de bóton 
-        self.va = Label(master, text="Bienvenido a la interfaz del proyecto ",height=2,bg=color) #Label donde aparece mensaje.
+        self.va = Label(master, text="Bienvenido a la interfaz del proyecto ",height=4,bg=color,fg='white') #Label donde aparece mensaje.
         self.va.pack() # Se añade mensaje a la ventanda. 
         x1=30 #Margen de x del cuadro n.
         y1=40# Margen de y del cuadro n.
@@ -28,22 +29,22 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         deltaX=50
         deltaY=30
         auxx=105
-        self.lab1 =Label(master, text="Numero de nodos:",width=20,bg=color).place(x=x1+40,y=50)
+        self.lab1 =Label(master, text="Numero de nodos:",width=20,bg=color,fg='white').place(x=x1+40,y=50)
         #self.l3 = Label(master, text="nodos ",width=7,bg=color).place(x=x1-10+auxx*2,y=deltaY*2+y1) #Margen superior de n, otro label. 
         x1=0
         self.nodos = Entry(width=6)
         self.nodos.insert(END,11)#pasar de grados a radianes
         self.nodos.place(x=x1-10+deltaX+auxx*2,y=deltaY*2+y1) #Objeto Entry de la interfaz.
-        self.lab2 =Label(master, text="Alpha:",width=40,bg=color).place(x=x1,y=150) 
+        self.lab2 =Label(master, text="Alpha:",width=40,bg=color,fg='white').place(x=x1,y=150) 
         #self.a2 =Label(master, text="a",width=7,bg=color).place(x=x1-10+auxx*2,y=deltaY*2+y1+100) #Margen superior de n, otro label. 
         self.alpha = Entry(width=6)
         self.alpha.insert(END,0.8)#valor predeterminado
         self.alpha.place(x=x1-10+deltaX+auxx*2,y=deltaY*2+y1+100) #Objeto Entry de la interfaz.
-        self.lab3 =Label(master, text="Numero de servidores:",width=28,bg=color).place(x=50,y=250)
+        self.lab3 =Label(master, text="Numero de servidores:",width=28,bg=color,fg='white').place(x=50,y=250)
         self.nraices= Entry(width=6)
         self.nraices.insert(END,2)#pasar de grados a radianes
         self.nraices.place(x=x1-10+deltaX+auxx*2,y=deltaY*2+y1+200) #Objeto Entry de la interfaz.
-        self.lab4 =Label(master, text="Numero de redes a generar:",width=30,bg=color).place(x=50,y=350) 
+        self.lab4 =Label(master, text="Numero de redes a generar:",width=30,bg=color,fg='white').place(x=50,y=350) 
         self.nredes = Entry(width=6)
         self.nredes.insert(END,2)#pasar de grados a radianes
         self.nredes.place(x=x1-10+deltaX+auxx*2,y=deltaY*2+y1+300) #Objeto Entry de la interfaz.
@@ -56,9 +57,9 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         parameters = [int(self.nodos.get()),float(self.alpha.get()),int(self.nraices.get())]
         for i in range(redes):
             self.graphs.append(RandomGraph(parameters[0],parameters[1],parameters[2]))
-        root = tk.Tk()
-        tabla=Table(root,self.graphs,text="Datos Redes").pack(side="top", fill="both", expand=True, padx=10, pady=10)
-        root.mainloop()
+        tablewinow = tk.Tk()
+        tabla=Table(tablewinow,self.graphs,text="Datos Redes").pack(side="top", fill="both", expand=True, padx=10, pady=10)
+        tablewinow.mainloop()
         return True
     def guardarDatos(self):
         import csv
@@ -70,10 +71,9 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
                 writer.writerow([i,len(g.roots),g.nodes,g.alpha,g.edges,len(g.bridges),len(g.articulationPoints),g.isDisperse(),g.isDense(),g.maxDepth,len(set(g.disconectednodes))])
                 i+=1
         #guarda los datos de las redes
+        messagebox.showinfo("Exportacion exitosa", "Los datos han sido exportados con exito al archivo graphs.csv")
         return True
     def reboot(self):
-        for i in self.graphs:
-            i.colorgraph()
         print("reboot")
         self.graphs = []
         return True
