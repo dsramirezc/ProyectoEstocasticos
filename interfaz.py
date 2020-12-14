@@ -9,9 +9,9 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         self.master = master #Creando objeto (gráfica) 
         master.title("GUI") #Nombre de ventana 
         master.geometry("600x500") #  Tamaño de ventana
-        master['bg'] = '#d4e6f1'.upper() #Color de background
-        color= '#d4e6f1'.upper() #Color azúl de botón
-        color1="#2980b9".upper() #Color azúl de bóton 
+        master['bg'] = '#4A5160'.upper() #Color de background
+        color= '#4A5160'.upper() #Color azúl de botón
+        color1="#5870B3".upper() #Color azúl de bóton 
         self.va = Label(master, text="Bienvenido a la interfaz del proyecto ",height=2,bg=color) #Label donde aparece mensaje.
         self.va.pack() # Se añade mensaje a la ventanda. 
         x1=30 #Margen de x del cuadro n.
@@ -39,17 +39,17 @@ class Ventana: #Se crea clase ventana la cual va realizar la interfas gráfica.
         self.nredes = Entry(width=6)
         self.nredes.insert(END,0)#pasar de grados a radianes
         self.nredes.place(x=x1-10+deltaX+auxx*2,y=deltaY*2+y1+300) #Objeto Entry de la interfaz.
-        self.generar = Button(master, text="Generar",width=6,bg=color1,command=self.generar).place(x=280-100,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
-        self.guardarDatos = Button(master, text="Guardar redes",width=20,bg=color1,command=self.guardarDatos).place(x=280+50,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
+        self.generar = Button(master, text="Generar",width=6,command=self.generar,highlightbackground=color1).place(x=280-100,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
+        self.guardarDatos = Button(master, text="Guardar redes",width=20,highlightbackground=color1,command=self.guardarDatos).place(x=280+50,y=440)     # Se crea animar con el botón animar, el color que de fondo y de nuevo, se llama la función de más abajo animar
 
     #funcion para realizar las diferentes graficas 
     def generar(self):
-        #para obtener un parametro self.parametro.get()
-        #genera las graficas de las redes
+        parameters = [int(self.nodos.get()),int(self.alpha.get()),int(self.nraices.get()),int(self.nredes.get())]
         return True
     def guardarDatos(self):
 
         #guarda los datos de las redes
         return True
-
-Ventana(Tk())
+root = Tk()
+Ventana(root)
+root.mainloop()

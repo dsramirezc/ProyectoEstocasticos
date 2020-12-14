@@ -216,7 +216,7 @@ class RandomGraph:
                     x=0.005, y=-0.002 ) ],
                 xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
-                )
+            )
         fig.show()
 rg = RandomGraph(10,0.3,2)
 rg.colorgraph()
