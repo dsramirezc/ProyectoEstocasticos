@@ -2,7 +2,7 @@ import numpy
 from numpy.random import uniform as rand
 import random
 import plotly.graph_objects as go
-
+import plotly.express as px
 class RandomGraph:
     # number of nodes
     nodes = 0
@@ -54,11 +54,12 @@ class RandomGraph:
         self.num = [0 for i in range(nodes)]
         self.low = [0 for i in range(nodes)]
         for i in range(nodes):
-            for j in range(nodes):
+            for j in range(i+1,nodes):
                 if i == j:
                     continue
                 if rand() <= self.probability:
                     self.adjacency[i].append(j)
+                    self.adjacency[j].append(i)
                     self.edges += 1
         self.getArticulationPointsAndBridges(self.root, -1)
         self.getMaxDepth()
@@ -82,11 +83,12 @@ class RandomGraph:
         self.num = [0 for i in range(self.nodes)]
         self.low = [0 for i in range(self.nodes)]
         for i in range(self.nodes):
-            for j in range(self.nodes):
+            for j in range(i+1,self.nodes):
                 if i == j:
                     continue
                 if rand() <= self.probability:
                     self.adjacency[i].append(j)
+                    self.adjacency[j].append(i)
                     self.edges += 1
         self.getArticulationPointsAndBridges(self.root, -1)
         self.getMaxDepth()
@@ -140,31 +142,50 @@ class RandomGraph:
                         bfs1.append(j)
             bfs = bfs1.copy()
         self.maxDepth = depth
+
+    def checknotroot(self,ad,roots):
+        for i in ad:
+            if i in roots:
+                return False
+        return True
     def colorgraph(self):
+        # colores
+        colors = px.colors.qualitative.Safe
         for i in range(self.nodes):
-            self.posx.append(random.randint(0,1000))
-            self.posy.append(random.randint(0,1000))
+            if(i in self.roots):
+                self.posx.append(random.randint(100,900))
+                self.posy.append(random.randint(700,1000))
+            else:
+                self.posx.append(random.randint(0,1000))
+                self.posy.append(random.randint(0,700))
         edge_x = []
         edge_y = []
+        edgecolors = []
         for edge in range(self.nodes):
             x0 = self.posx[edge]
             y0 = self.posy[edge]
             for ad in self.adjacency[edge]:
                 x1 = self.posx[ad]
                 y1 = self.posy[ad]
+                edgecolors.append(colors[1])
+                for b in self.bridges:
+                    if(b[0] == edge and b[1]==ad):
+                        edgecolors[len(edgecolors)-1]= colors[2]
+                        break
                 edge_x.append(x0)
                 edge_x.append(x1)
                 edge_x.append(None)
                 edge_y.append(y0)
                 edge_y.append(y1)
                 edge_y.append(None)
-
+        print(edgecolors)
         edge_trace = go.Scatter(
             x=edge_x, y=edge_y,
             line=dict(width=0.5, color='#888'),
             hoverinfo='none',
             mode='lines')
-
+        print(edge_trace.marker)
+        # Color edge
         node_x = []
         node_y = []
         for node in range(self.nodes):
@@ -178,30 +199,35 @@ class RandomGraph:
             mode='markers',
             hoverinfo='text',
             marker=dict(
-                showscale=True,
+                # showscale=True,
                 # colorscale options
                 #'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
                 #'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
                 #'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
-                colorscale='YlGnBu',
-                reversescale=True,
+                # colorscale='YlGnBu',
+                # reversescale=True,
                 color=[],
                 size=10,
-                colorbar=dict(
-                    thickness=15,
-                    title='Node Connections',
-                    xanchor='left',
-                    titleside='right'
-                ),
                 line_width=2))
+        # colors
+        
         node_adjacencies = []
-        # node_text = []
-        # for node, adjacencies in enumerate(G.adjacency()):
-        #     node_adjacencies.append(len(adjacencies[1]))
-        #     node_text.append('# of connections: '+str(len(adjacencies[1])))
-
-        # node_trace.marker.color = node_adjacencies
-        # node_trace.text = node_text
+        node_text = []
+        for i in range(self.nodes):
+            nodetext =''
+            if(i in self.roots):
+                node_adjacencies.append(colors[4])
+                nodetext = nodetext + "Servidor" + ' - '
+            else:
+                node_adjacencies.append(colors[0])
+                nodetext = nodetext + "Cliente" + ' - '
+            # no connection
+            if(self.checknotroot(self.adjacency[i],self.roots) and i not in self.roots):
+                node_adjacencies[i]=(colors[9])
+            nodetext += 'Conexiones: '+str(len(self.adjacency[i])) + ' - ' + "Node #" + str(i)
+            node_text.append(nodetext)
+        node_trace.marker.color = node_adjacencies
+        node_trace.text = node_text
         fig = go.Figure(data=[edge_trace, node_trace],
              layout=go.Layout(
                 title='<br>Network graph made with Python',
@@ -218,5 +244,8 @@ class RandomGraph:
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
             )
         fig.show()
-rg = RandomGraph(10,0.3,2)
+rg = RandomGraph(2,0.1,1)
+print(rg.adjacency)
+print(rg.roots)
+print(rg.bridges)
 rg.colorgraph()
